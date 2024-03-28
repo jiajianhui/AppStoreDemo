@@ -31,11 +31,11 @@ struct CardView: View {
         } label: {
             VStack(alignment: .leading, spacing: 0) {
                 cover
-                info
+//                info
             }
             .frame(
                 width: UIScreen.main.bounds.width - 40,
-                height: (UIScreen.main.bounds.width - 40) + 30
+                height: (UIScreen.main.bounds.width - 40) + 20
             )
             
             .mask(
@@ -73,8 +73,11 @@ extension CardView {
             .matchedGeometryEffect(id: "cover\(cardContent.id)", in: nameSpace, isSource: true)  //一定要在frame上面
             .frame(
                 width: UIScreen.main.bounds.width - 40,
-                height: UIScreen.main.bounds.width - 40 + 30 - 80
+                height: UIScreen.main.bounds.width - 40 + 20
             )
+            .overlay(alignment: .bottom) {
+                info
+            }
     }
     
     //文案
@@ -87,28 +90,31 @@ extension CardView {
                 .matchedGeometryEffect(id: "title\(cardContent.id)", in: nameSpace, isSource: true)
             Text(cardContent.description)
                 .opacity(0.4)
+                .matchedGeometryEffect(id: "subTitle\(cardContent.id)", in: nameSpace, isSource: true)
         }
-        .foregroundStyle(Color.primary)
+        .foregroundStyle(Color.white)
         .frame(maxWidth: .infinity, alignment: .leading)
         .frame(height: 80)
         .padding(.horizontal, 24)
-//        .background {
-//            ZStack {
-//                Image(cardContent.cover)
-//                    .resizable()
-//                    .scaledToFill()
-//                    .matchedGeometryEffect(id: "coverBlur\(cardContent.id)", in: nameSpace, isSource: true)
-//                    .frame(height: 80)
-//                
-//                    .blur(radius: 100)
-//                    .mask(
-//                        Rectangle()
-//                    )
-//                
-//                Color.black.opacity(0.1)
-//            }
-//            
-//        }
+        .background {
+            ZStack {
+                Image(cardContent.cover)
+                    .resizable()
+                    .scaledToFill()
+                    .matchedGeometryEffect(id: "coverBlur\(cardContent.id)", in: nameSpace, isSource: true)
+                    .frame(height: 80)
+                
+                    .blur(radius: 20)
+                    .mask(
+                        RoundedRectangle(cornerRadius: 0)
+                            .matchedGeometryEffect(id: "coverMask\(cardContent.id)", in: nameSpace, isSource: true)
+                    )
+                
+                Color.black.opacity(0.1)
+                    .matchedGeometryEffect(id: "coverBlack\(cardContent.id)", in: nameSpace, isSource: true)
+            }
+            
+        }
     }
     
     

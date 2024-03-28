@@ -23,12 +23,9 @@ struct CardDetailView: View {
     
     var body: some View {
         ScrollView {
-            ZStack {
-                cover
-                info
-            }
+            cover
         }
-        .coordinateSpace(name: "detail")
+//        .coordinateSpace(name: "detail")
         .mask(
             maskShape
         )
@@ -53,6 +50,8 @@ struct CardDetailView_Previews: PreviewProvider {
     
 }
 
+
+//MARK: - 组件
 extension CardDetailView {
     
     //关闭按钮
@@ -93,7 +92,7 @@ extension CardDetailView {
     var cover: some View {
         GeometryReader { proxy in
             let scrollY = proxy.frame(in: .named("detail")).minY
-            let height = UIScreen.main.bounds.width + (scrollY > 0 ? scrollY  : 0)
+            let height = UIScreen.main.bounds.width + 80 + (scrollY > 0 ? scrollY  : 0)
             
             Image(cardContent.cover)
                 .resizable()
@@ -101,6 +100,10 @@ extension CardDetailView {
                 .matchedGeometryEffect(id: "cover\(cardContent.id)", in: nameSpace, isSource: true)  //一定要在frame上面
                 .frame(width: UIScreen.main.bounds.width, height: height)
                 .offset(y: scrollY > 0 ? -scrollY : 0)
+                .overlay(alignment: .bottom) {
+                    info
+                        .offset(y: scrollY > 0 ? -scrollY : 0)
+                }
         }
         
     }
@@ -109,34 +112,37 @@ extension CardDetailView {
     var info: some View {
         VStack(alignment: .leading) {
             Text(cardContent.title)
-                .font(.system(size: 40, weight: .bold))
+                .font(.title)
+                .fontWeight(.bold)
                 .matchedGeometryEffect(id: "title\(cardContent.id)", in: nameSpace, isSource: true)
             
             Text(cardContent.description)
+                .matchedGeometryEffect(id: "subTitle\(cardContent.id)", in: nameSpace, isSource: true)
         }
-        .foregroundStyle(Color.primary)
+        .foregroundStyle(Color.white)
         .padding()
         .frame(width: UIScreen.main.bounds.width, alignment: .leading)
-//        .background {
-//            ZStack {
-//                Image(cardContent.cover)
-//                    .resizable()
-//                    .scaledToFill()
-//                    .matchedGeometryEffect(id: "coverBlur\(cardContent.id)", in: nameSpace, isSource: true)
-//                    .frame(height: 80)
-//                
-//                    .blur(radius: 100)
-//                    
-//                
-//                Color.black.opacity(0.1)
-//            }
-//            .mask(
-//                Rectangle()
-//            )
-//            
-//        }
-        
-        .offset(y: UIScreen.main.bounds.width)
+        .frame(height: 80)
+        .background {
+            ZStack {
+                Image(cardContent.cover)
+                    .resizable()
+                    .scaledToFill()
+                    .matchedGeometryEffect(id: "coverBlur\(cardContent.id)", in: nameSpace, isSource: true)
+                    .frame(height: 80)
+                
+                    .blur(radius: 20)
+                    
+                
+                Color.black.opacity(0.1)
+                    .matchedGeometryEffect(id: "coverMask\(cardContent.id)", in: nameSpace, isSource: true)
+            }
+            .mask(
+                Rectangle()
+                    .matchedGeometryEffect(id: "coverBlack\(cardContent.id)", in: nameSpace, isSource: true)
+            )
+            
+        }
     }
     
     //mask
