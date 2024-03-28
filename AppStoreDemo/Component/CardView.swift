@@ -57,7 +57,7 @@ struct CardView_Previews: PreviewProvider {
     
     @Namespace static var nameSpace
     static var previews: some View {
-        CardView(cardContent: CardContentModel(cover: "01", title: "1", description: "1"), showDetail: .constant(false), selectedID: .constant(UUID()), nameSpace: nameSpace)
+        CardView(cardContent: CardContentModel(cover: "01", title: "1", subTitle: "1", description: "1"), showDetail: .constant(false), selectedID: .constant(UUID()), nameSpace: nameSpace)
     }
     
 }
@@ -84,12 +84,11 @@ extension CardView {
     private var info: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(cardContent.title)
-                .font(.title)
-                .fontWeight(.bold)
+                .font(.system(size: 26, weight: .bold))
             
                 .matchedGeometryEffect(id: "title\(cardContent.id)", in: nameSpace, isSource: true)
-            Text(cardContent.description)
-                .opacity(0.4)
+            Text(cardContent.subTitle)
+                .opacity(0.8)
                 .matchedGeometryEffect(id: "subTitle\(cardContent.id)", in: nameSpace, isSource: true)
         }
         .foregroundStyle(Color.white)

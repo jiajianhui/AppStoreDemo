@@ -24,8 +24,10 @@ struct CardDetailView: View {
     var body: some View {
         ScrollView {
             cover
+            content
         }
-//        .coordinateSpace(name: "detail")
+        .frame(height: UIScreen.main.bounds.height)  //解决下拉时顶部出现空白的问题
+        .coordinateSpace(name: "detail")
         .mask(
             maskShape
         )
@@ -45,7 +47,7 @@ struct CardDetailView: View {
 struct CardDetailView_Previews: PreviewProvider {
     @Namespace static var nameSpace
     static var previews: some View {
-        CardDetailView(cardContent: CardContentModel(cover: "01", title: "1", description: "1"), showDetail: .constant(true), selectedID: .constant(UUID()), nameSpace: nameSpace)
+        CardDetailView(cardContent: CardContentModel(cover: cards[0].cover, title: cards[0].title, subTitle: cards[0].subTitle, description: cards[0].description), showDetail: .constant(true), selectedID: .constant(UUID()), nameSpace: nameSpace)
     }
     
 }
@@ -81,7 +83,7 @@ extension CardDetailView {
         //延迟出现
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                withAnimation(.spring()) {
+                withAnimation(.closeBtn) {
                     showCloseBtn = true
                 }
             }
@@ -108,15 +110,14 @@ extension CardDetailView {
         
     }
     
-    //文案
+    //标题
     var info: some View {
         VStack(alignment: .leading) {
             Text(cardContent.title)
-                .font(.title)
-                .fontWeight(.bold)
+                .font(.system(size: 26, weight: .bold))
                 .matchedGeometryEffect(id: "title\(cardContent.id)", in: nameSpace, isSource: true)
             
-            Text(cardContent.description)
+            Text(cardContent.subTitle)
                 .matchedGeometryEffect(id: "subTitle\(cardContent.id)", in: nameSpace, isSource: true)
         }
         .foregroundStyle(Color.white)
@@ -144,6 +145,18 @@ extension CardDetailView {
             
         }
     }
+    
+    //内容
+    var content: some View {
+        Text(cardContent.description)
+            .foregroundStyle(Color(uiColor: .systemGray))
+            .padding(8)
+            .padding(.horizontal, 10)
+            .lineSpacing(6)
+            .frame(width: UIScreen.main.bounds.width, alignment: .leading)
+            .offset(y: UIScreen.main.bounds.width + 80)
+    }
+    
     
     //mask
     var maskShape: some View {
