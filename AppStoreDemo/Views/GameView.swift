@@ -11,17 +11,24 @@ struct GameView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                Text("hello")
-            }
-            .navigationTitle("1")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Text("222")
+                VStack(spacing: 4) {
+                    HeaderView(title: "游戏", showDate: false)
+                    
+                    //入口标签
+                    AppTagView()
+                    
+                    //推荐卡片
+                    AppCardView()
+                    
+                    //推荐列表
+                    AppGridView(title: "30 款近期佳作", subTitle: "向左滑动 查看更多", showSubTitle: true)
+                    AppGridView(title: "30 款近期佳作", subTitle: "向左滑动 查看更多", showSubTitle: false)
+                    
                 }
+                
             }
-            .toolbarTitleDisplayMode(.large)
         }
+
     }
 }
 

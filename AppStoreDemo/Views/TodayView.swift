@@ -17,14 +17,9 @@ struct TodayView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
-                HStack(alignment: .center) {
-                    Text("Today")
-                        .font(.system(size: 36, weight: .bold))
-                    date
-                    Spacer()
-                    AvatarView()
-                }
-                .frame(width: UIScreen.main.bounds.width - 40)
+                HeaderView(title: "Today", showDate: true)
+                    
+                
                 VStack(spacing: 24) {
                     if !showDetail {
                         ForEach(cards) { card in
@@ -43,6 +38,15 @@ struct TodayView: View {
     }
 }
 
+struct TodayView_Previews: PreviewProvider {
+    
+    @Namespace static var nameSpace
+    static var previews: some View {
+        TodayView(showDetail: .constant(false), selectedID: .constant(UUID()), nameSpace: nameSpace)
+    }
+    
+}
+
 //#Preview {
 //    @Namespace var nameSpace
 //    TodayView(showDetail: .constant(false), selectedID: .constant(UUID()), nameSpace: nameSpace)
@@ -51,21 +55,6 @@ struct TodayView: View {
 
 //日期
 extension TodayView {
-    
-    //日期
-    var date: some View {
-        Text(currentDateText)
-            .font(.system(size: 22, weight: .bold))
-            .baselineOffset(-10)
-            .opacity(0.4)
-    }
-    
-    var currentDateText: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "M月d日"
-        
-        return dateFormatter.string(from: Date())
-    }
     
     
     //占位视图

@@ -25,7 +25,7 @@ struct ContentView: View {
                         Image(systemName: "doc.text.image")
                         Text("Today")
                     }
-                Text("2")
+                GameView()
                     .tabItem {
                         Image(systemName: "gamecontroller")
                         Text("游戏")

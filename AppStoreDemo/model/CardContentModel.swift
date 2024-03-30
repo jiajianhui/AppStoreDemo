@@ -37,6 +37,6 @@ var cards: [CardContentModel] = [
         title: "Notability",
         subTitle: "轻松笔记，轻松注解",
         description: "学生、教师、艺术人士和专业人士每天都使用Notability来丰富自己的生活。做笔记只是起点；用 Notability 寻找灵感、捕捉创意、释放创造力。"
-    ),
+    )
 ]
 
