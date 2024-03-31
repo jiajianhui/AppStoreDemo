@@ -21,8 +21,11 @@ struct GameView: View {
                     AppCardView()
                     
                     //推荐列表
-                    AppGridView(title: "30 款近期佳作", subTitle: "向左滑动 查看更多", showSubTitle: true)
-                    AppGridView(title: "30 款近期佳作", subTitle: "向左滑动 查看更多", showSubTitle: false)
+                    VStack(spacing: 0) {
+                        ForEach(appGrids) { appGrid in
+                            AppGridView(appGridModel: appGrid)
+                        }
+                    }
                     
                 }
                 

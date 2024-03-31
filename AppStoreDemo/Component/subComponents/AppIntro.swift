@@ -7,10 +7,13 @@
 
 import SwiftUI
 
-struct AppInfo: View {
+struct AppIntro: View {
+    
+    var appIntroModel: AppIntroModel
+    
     var body: some View {
         HStack {
-            cover
+            appCover
             title
             Spacer()
             getBtn
@@ -20,23 +23,29 @@ struct AppInfo: View {
 }
 
 #Preview {
-    AppInfo()
+    AppIntro(appIntroModel: AppIntroModel(appCover: "chatgpt", appName: "chatGpt", appDescription: "openAI,L.L.C"))
 }
 
-extension AppInfo {
+extension AppIntro {
     
-    var cover: some View {
-        Image("01")
+    var appCover: some View {
+        Image(appIntroModel.appCover)
             .resizable()
             .scaledToFill()
-            .frame(width: 70, height: 70)
-            .mask(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .frame(width: 60, height: 60)
+            .mask(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .fill(Color.clear)
+                    .stroke(Color.black.opacity(0.1), lineWidth: 1)
+            }
+            
     }
     
     var title: some View {
         VStack(alignment: .leading) {
-            Text("标题")
-            Text("描述")
+            Text(appIntroModel.appName)
+            Text(appIntroModel.appDescription)
                 .font(.caption)
                 .foregroundStyle(Color.gray)
         }
