@@ -15,6 +15,10 @@ struct AppIntroModel: Identifiable {
     let appCover: String
     let appName: String
     let appDescription: String
+    
+    //是否为小卡片
+    var isSmall: Bool = false
+    
 }
 
 
@@ -24,9 +28,14 @@ struct AppGridModel: Identifiable {
     let title: String
     let subTitle: String
     var showSubTitle: Bool
+    var showBtn: Bool = true
     
     let appIntros: [AppIntroModel]
+    
+    
 }
+
+
 
 
 //模拟数据

@@ -11,6 +11,9 @@ struct AppIntro: View {
     
     var appIntroModel: AppIntroModel
     
+    var width: CGFloat = 60
+    
+    
     var body: some View {
         HStack {
             appCover
@@ -18,12 +21,20 @@ struct AppIntro: View {
             Spacer()
             getBtn
         }
-        .frame(width: UIScreen.main.bounds.width - 40)
     }
 }
 
 #Preview {
-    AppIntro(appIntroModel: AppIntroModel(appCover: "chatgpt", appName: "chatGpt", appDescription: "openAI,L.L.C"))
+    VStack {
+        AppIntro(appIntroModel: AppIntroModel(appCover: "chatgpt", appName: "ChatGPT", appDescription: "OpenAI,L.L.C"))
+        AppIntro(appIntroModel: AppIntroModel(appCover: "chatgpt", appName: "ChatGPT", appDescription: "OpenAI,L.L.C", isSmall: true))
+            .padding()
+            .background {
+                Color.green
+            }
+    }
+    
+    
 }
 
 extension AppIntro {
@@ -32,10 +43,13 @@ extension AppIntro {
         Image(appIntroModel.appCover)
             .resizable()
             .scaledToFill()
-            .frame(width: 60, height: 60)
-            .mask(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .frame(
+                width: appIntroModel.isSmall ? 40 : 60,
+                height: appIntroModel.isSmall ? 40 : 60
+            )
+            .mask(RoundedRectangle(cornerRadius: appIntroModel.isSmall ? 8 : 14, style: .continuous))
             .overlay {
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                RoundedRectangle(cornerRadius: appIntroModel.isSmall ? 8 : 14, style: .continuous)
                     .fill(Color.clear)
                     .stroke(Color.black.opacity(0.1), lineWidth: 1)
             }
@@ -45,9 +59,11 @@ extension AppIntro {
     var title: some View {
         VStack(alignment: .leading) {
             Text(appIntroModel.appName)
+                .foregroundStyle(appIntroModel.isSmall ? Color.white : Color.primary)
+                .fontWeight(.medium)
             Text(appIntroModel.appDescription)
                 .font(.caption)
-                .foregroundStyle(Color.gray)
+                .foregroundStyle(appIntroModel.isSmall ? Color.white.opacity(0.6) : Color.gray)
         }
     }
     
@@ -57,12 +73,13 @@ extension AppIntro {
         } label: {
             Text("获取")
                 .font(.callout)
+                .foregroundStyle(appIntroModel.isSmall ? Color.white : Color.blue)
                 .fontWeight(.medium)
                 .padding(6)
                 .padding(.horizontal, 12)
                 .background {
                     RoundedRectangle(cornerRadius: 90)
-                        .foregroundStyle(Color(uiColor: .systemGray6))
+                        .foregroundStyle(appIntroModel.isSmall ? Color.white.opacity(0.4) : Color(uiColor: .systemGray6))
                 }
         }
     }

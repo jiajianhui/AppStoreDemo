@@ -17,15 +17,11 @@ struct GameView: View {
                     //入口标签
                     AppTagView()
                     
-                    //推荐卡片
+//                    推荐卡片
                     AppCardView()
                     
                     //推荐列表
-                    VStack(spacing: 0) {
-                        ForEach(appGrids) { appGrid in
-                            AppGridView(appGridModel: appGrid)
-                        }
-                    }
+                    AppGridView()
                     
                 }
                 
