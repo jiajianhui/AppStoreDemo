@@ -9,7 +9,24 @@ import SwiftUI
 
 struct AppView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 4) {
+                    HeaderView(title: "App", showDate: false)
+                    
+                    //入口标签
+                    TagView(isGame: false)
+                    
+                    //推荐卡片
+                    EventView(isGame: false)
+                    
+                    //推荐列表
+                    RankView(isGame: false)
+                    
+                }
+                
+            }
+        }
     }
 }
 

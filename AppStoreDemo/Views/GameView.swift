@@ -15,13 +15,13 @@ struct GameView: View {
                     HeaderView(title: "游戏", showDate: false)
                     
                     //入口标签
-                    AppTagView()
+                    TagView(isGame: false)
                     
-//                    推荐卡片
-                    AppCardView()
+                    //推荐卡片
+                    EventView(isGame: true)
                     
                     //推荐列表
-                    AppGridView()
+                    RankView(isGame: true)
                     
                 }
                 

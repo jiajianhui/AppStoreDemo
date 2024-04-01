@@ -30,12 +30,12 @@ struct ContentView: View {
                         Image(systemName: "gamecontroller")
                         Text("游戏")
                     }
-                Text("3")
+                AppView()
                     .tabItem {
                         Image(systemName: "square.stack.3d.up.fill")
                         Text("App")
                     }
-                Text("4")
+                SearchView()
                     .tabItem {
                         Image(systemName: "magnifyingglass")
                         Text("搜索")
