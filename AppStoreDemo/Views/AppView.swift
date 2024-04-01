@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct AppView: View {
+    
+    @State var showBlurBG: Bool = false
+    
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 4) {
-                    HeaderView(title: "App", showDate: false)
+                    HeaderView(title: "App", showDate: false, showBlurBG: $showBlurBG)
                     
                     //入口标签
                     TagView(isGame: false)
@@ -25,6 +28,9 @@ struct AppView: View {
                     
                 }
                 
+            }
+            .overlay(alignment: .top) {
+                BlurBGView(showBlurBG: $showBlurBG, title: "App")
             }
         }
     }

@@ -12,22 +12,43 @@ struct HeaderView: View {
     var title: String
     var showDate: Bool
     
+    @Binding var showBlurBG: Bool
     
     var body: some View {
-        HStack(alignment: .center) {
-            Text(title)
-                .font(.system(size: 36, weight: .bold))
-            date
-                .opacity(showDate ? 1 : 0)
-            Spacer()
-            AvatarView()
-        }
-        .frame(width: UIScreen.main.bounds.width - 40)
+        GeometryReader(content: { geometry in
+            VStack {
+                HStack(alignment: .center) {
+                    Text(title)
+                        .font(.system(size: 36, weight: .bold))
+                    date
+                        .opacity(showDate ? 1 : 0)
+                    Spacer()
+                    AvatarView()
+                }
+                .frame(width: UIScreen.main.bounds.width - 40)
+                
+            }
+            .frame(maxWidth: .infinity)
+            .onChange(of: geometry.frame(in: .global).minY) { _, newValue in
+                if newValue < 36 {
+                    withAnimation(.easeIn(duration: 0.1)) {
+                        showBlurBG = true
+                    }
+                    
+                } else {
+                    withAnimation(.easeOut) {
+                        showBlurBG = false
+                    }
+                }
+            }
+        })
+        .frame(height: 40)
+        
     }
 }
 
 #Preview {
-    HeaderView(title: "Hello", showDate: true)
+    HeaderView(title: "Hello", showDate: true, showBlurBG: .constant(true))
 }
 
 

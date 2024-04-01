@@ -14,12 +14,13 @@ struct TodayView: View {
     
     var nameSpace: Namespace.ID
     
+    @State var showBlurBG: Bool = false
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
-                HeaderView(title: "Today", showDate: true)
-                    
-                
+                HeaderView(title: "Today", showDate: false, showBlurBG: $showBlurBG)
+                  
                 VStack(spacing: 24) {
                     if !showDetail {
                         ForEach(cards) { card in
@@ -31,9 +32,12 @@ struct TodayView: View {
                         }
                     }
                 }
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
             
+        }
+        .overlay(alignment: .top) {
+            BlurBGView(showBlurBG: $showBlurBG, title: "", height: 50)
         }
     }
 }
