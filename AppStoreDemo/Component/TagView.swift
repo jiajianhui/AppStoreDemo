@@ -18,7 +18,7 @@ struct TagView: View {
                 
                 ForEach(isGame ? gameTags : appTags) { tag in
                     NavigationLink {
-                        Text(tag.name)
+                        TagDetailView(tagModel: tag)
                     } label: {
                         HStack(spacing: 4) {
                             Image(tag.image)

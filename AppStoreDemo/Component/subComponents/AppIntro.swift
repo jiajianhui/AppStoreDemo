@@ -7,19 +7,36 @@
 
 import SwiftUI
 
+enum SizeType {
+    case normal, small, big
+}
+
 struct AppIntro: View {
     
     var appIntroModel: AppIntroModel
     
-    var width: CGFloat = 60
+    var normalSize: CGFloat = 60
+    var smallSize: CGFloat = 40
+    var bigSize: CGFloat = 90
+    
+    var normalRadius: CGFloat = 14
+    var smallRadius: CGFloat = 8
+    var bigRadius: CGFloat = 18
+    
+    var sizeType: SizeType = .normal
     
     
     var body: some View {
-        HStack {
-            appCover
-            title
-            Spacer()
-            getBtn
+        
+        VStack {
+            switch sizeType {
+                case .normal:
+                    normalView
+                case .small:
+                    smallView
+                case .big:
+                    bigView
+            }
         }
     }
 }
@@ -27,61 +44,165 @@ struct AppIntro: View {
 #Preview {
     VStack {
         AppIntro(appIntroModel: AppIntroModel(appCover: "chatgpt", appName: "ChatGPT", appDescription: "OpenAI,L.L.C"))
-        AppIntro(appIntroModel: AppIntroModel(appCover: "chatgpt", appName: "ChatGPT", appDescription: "OpenAI,L.L.C", isSmall: true))
+        AppIntro(appIntroModel: AppIntroModel(appCover: "chatgpt", appName: "ChatGPT", appDescription: "OpenAI,L.L.C"), sizeType: .small)
             .padding()
             .background {
                 Color.green
             }
+        AppIntro(appIntroModel: AppIntroModel(appCover: "chatgpt", appName: "ChatGPT", appDescription: "OpenAI,L.L.C"), sizeType: .big)
     }
     
     
 }
 
+
+
+
+
+
 extension AppIntro {
     
-    var appCover: some View {
-        Image(appIntroModel.appCover)
-            .resizable()
-            .scaledToFill()
-            .frame(
-                width: appIntroModel.isSmall ? 40 : 60,
-                height: appIntroModel.isSmall ? 40 : 60
-            )
-            .mask(RoundedRectangle(cornerRadius: appIntroModel.isSmall ? 8 : 14, style: .continuous))
-            .overlay {
-                RoundedRectangle(cornerRadius: appIntroModel.isSmall ? 8 : 14, style: .continuous)
-                    .fill(Color.clear)
-                    .stroke(Color.black.opacity(0.1), lineWidth: 1)
+    //大视图
+    var bigView: some View {
+        HStack(spacing: 14) {
+            Image(appIntroModel.appCover)
+                .resizable()
+                .scaledToFill()
+                .frame(
+                    width: bigSize,
+                    height: bigSize
+                )
+                .mask(RoundedRectangle(cornerRadius: bigRadius, style: .continuous))
+                .overlay {
+                    RoundedRectangle(cornerRadius: bigRadius, style: .continuous)
+                        .fill(Color.clear)
+                        .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                }
+            VStack(alignment: .leading) {
+                VStack(alignment: .leading) {
+                    Text(appIntroModel.appName)
+                        .fontWeight(.medium)
+                    Text(appIntroModel.appDescription)
+                        .font(.caption)
+                        .foregroundStyle(Color.gray)
+                    
+                }
+                
+                Spacer()
+                
+                Button {
+                    
+                } label: {
+                    Text("获取")
+                        .font(.callout)
+                        .foregroundStyle(Color.blue)
+                        .fontWeight(.medium)
+                        .padding(6)
+                        .padding(.horizontal, 12)
+                        .background {
+                            RoundedRectangle(cornerRadius: 90)
+                                .foregroundStyle(Color(uiColor: .systemGray6))
+                        }
+                }
+            }
+            .frame(height: 90)
+            
+            
+        Spacer()
+        }
+            
+    }
+    
+    //小视图
+    var smallView: some View {
+        HStack {
+            Image(appIntroModel.appCover)
+                .resizable()
+                .scaledToFill()
+                .frame(
+                    width: smallSize,
+                    height: smallSize
+                )
+                .mask(RoundedRectangle(cornerRadius: smallRadius, style: .continuous))
+                .overlay {
+                    RoundedRectangle(cornerRadius: smallRadius, style: .continuous)
+                        .fill(Color.clear)
+                        .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                }
+            
+            VStack(alignment: .leading) {
+                Text(appIntroModel.appName)
+                    .foregroundStyle(Color.white)
+                    .fontWeight(.medium)
+                Text(appIntroModel.appDescription)
+                    .font(.caption)
+                    .foregroundStyle(Color.white.opacity(0.6))
             }
             
-    }
-    
-    var title: some View {
-        VStack(alignment: .leading) {
-            Text(appIntroModel.appName)
-                .foregroundStyle(appIntroModel.isSmall ? Color.white : Color.primary)
-                .fontWeight(.medium)
-            Text(appIntroModel.appDescription)
-                .font(.caption)
-                .foregroundStyle(appIntroModel.isSmall ? Color.white.opacity(0.6) : Color.gray)
-        }
-    }
-    
-    var getBtn: some View {
-        Button {
+            Spacer()
             
-        } label: {
-            Text("获取")
-                .font(.callout)
-                .foregroundStyle(appIntroModel.isSmall ? Color.white : Color.blue)
-                .fontWeight(.medium)
-                .padding(6)
-                .padding(.horizontal, 12)
-                .background {
-                    RoundedRectangle(cornerRadius: 90)
-                        .foregroundStyle(appIntroModel.isSmall ? Color.white.opacity(0.4) : Color(uiColor: .systemGray6))
-                }
+            Button {
+                
+            } label: {
+                Text("获取")
+                    .font(.callout)
+                    .foregroundStyle(Color.white)
+                    .fontWeight(.medium)
+                    .padding(6)
+                    .padding(.horizontal, 12)
+                    .background {
+                        RoundedRectangle(cornerRadius: 90)
+                            .foregroundStyle(Color.white.opacity(0.4))
+                    }
+            }
         }
     }
+    
+    //标准视图
+    var normalView: some View {
+        HStack {
+            Image(appIntroModel.appCover)
+                .resizable()
+                .scaledToFill()
+                .frame(
+                    width: normalSize,
+                    height: normalSize
+                )
+                .mask(RoundedRectangle(cornerRadius: normalRadius, style: .continuous))
+                .overlay {
+                    RoundedRectangle(cornerRadius: normalRadius, style: .continuous)
+                        .fill(Color.clear)
+                        .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                }
+            
+            VStack(alignment: .leading) {
+                Text(appIntroModel.appName)
+                    .foregroundStyle(Color.primary)
+                    .fontWeight(.medium)
+                Text(appIntroModel.appDescription)
+                    .font(.caption)
+                    .foregroundStyle(Color.gray)
+            }
+            
+            Spacer()
+            
+            Button {
+                
+            } label: {
+                Text("获取")
+                    .font(.callout)
+                    .foregroundStyle(Color.blue)
+                    .fontWeight(.medium)
+                    .padding(6)
+                    .padding(.horizontal, 12)
+                    .background {
+                        RoundedRectangle(cornerRadius: 90)
+                            .foregroundStyle(Color(uiColor: .systemGray6))
+                    }
+            }
+        }
+    }
+    
+    
     
 }

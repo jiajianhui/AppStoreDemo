@@ -49,7 +49,7 @@ struct EventView: View {
                             }
                             
                             .overlay(alignment: .bottom) {
-                                AppIntro(appIntroModel: card.appIntro)
+                                AppIntro(appIntroModel: card.appIntro, sizeType: .small)
                                     .padding()
                                     .frame(height: 60)
                                     

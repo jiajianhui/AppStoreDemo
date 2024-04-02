@@ -21,16 +21,16 @@ struct RankView: View {
     var body: some View {
         
         VStack(spacing: 0) {
-            ForEach(isGame ? gameGrids : appGrids) { appGrid in
+            ForEach(isGame ? gameRank : appRank) { rank in
                 VStack(spacing: 6) {
                     //标题
-                    TitleView(title: appGrid.title, subTitle: appGrid.subTitle, showSubTitle: appGrid.showSubTitle, showBtn: appGrid.showBtn)
+                    TitleView(rankModel: rank)
                     
                     //列表
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHGrid(rows: rows,alignment: .center, spacing: 10, content: {
                             
-                            ForEach(appGrid.appIntros) { appIntro in
+                            ForEach(rank.appIntros) { appIntro in
                                 AppIntro(appIntroModel: appIntro)
                                     .frame(width: UIScreen.main.bounds.width - 40)
                             }
