@@ -94,18 +94,17 @@ extension CardDetailView {
     var cover: some View {
         GeometryReader { proxy in
             let scrollY = proxy.frame(in: .named("detail")).minY
-            let height = UIScreen.main.bounds.width + 80 + (scrollY > 0 ? scrollY  : 0)
+            let height = 460 + (scrollY > 0 ? scrollY  : 0)
             
             Image(cardContent.cover)
                 .resizable()
                 .scaledToFill()
                 .matchedGeometryEffect(id: "cover\(cardContent.id)", in: nameSpace, isSource: true)  //一定要在frame上面
                 .frame(width: UIScreen.main.bounds.width, height: height)
-                .offset(y: scrollY > 0 ? -scrollY : 0)
                 .overlay(alignment: .bottom) {
                     info
-                        .offset(y: scrollY > 0 ? -scrollY : 0)
                 }
+                .offset(y: scrollY > 0 ? -scrollY : 0)
         }
         
     }
@@ -154,7 +153,7 @@ extension CardDetailView {
             .padding(.horizontal, 10)
             .lineSpacing(6)
             .frame(width: UIScreen.main.bounds.width, alignment: .leading)
-            .offset(y: UIScreen.main.bounds.width + 80)
+            .offset(y: 460)
     }
     
     

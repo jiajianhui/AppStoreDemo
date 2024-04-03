@@ -40,7 +40,7 @@ struct RankView: View {
                         .frame(height: 220)
                     }
                     .safeAreaPadding(.horizontal, 20)
-                    .scrollTargetBehavior(.viewAligned)
+                    .scrollTargetBehavior(.viewAligned)  //iOS17的新功能；viewAligned——滚动时对齐视图
                 }
                 .padding(.top, 30)
             }

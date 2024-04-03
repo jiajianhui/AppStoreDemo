@@ -64,52 +64,58 @@ extension AppIntro {
     
     //大视图
     var bigView: some View {
-        HStack(spacing: 14) {
-            Image(appIntroModel.appCover)
-                .resizable()
-                .scaledToFill()
-                .frame(
-                    width: bigSize,
-                    height: bigSize
-                )
-                .mask(RoundedRectangle(cornerRadius: bigRadius, style: .continuous))
-                .overlay {
-                    RoundedRectangle(cornerRadius: bigRadius, style: .continuous)
-                        .fill(Color.clear)
-                        .stroke(Color.black.opacity(0.1), lineWidth: 1)
-                }
-            VStack(alignment: .leading) {
+        NavigationLink {
+            AppDetailView(appIntroModel: appIntroModel)
+        } label: {
+            HStack(spacing: 14) {
+                Image(appIntroModel.appCover)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(
+                        width: bigSize,
+                        height: bigSize
+                    )
+                    .mask(RoundedRectangle(cornerRadius: bigRadius, style: .continuous))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: bigRadius, style: .continuous)
+                            .fill(Color.clear)
+                            .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                    }
                 VStack(alignment: .leading) {
-                    Text(appIntroModel.appName)
-                        .fontWeight(.medium)
-                    Text(appIntroModel.appDescription)
-                        .font(.caption)
-                        .foregroundStyle(Color.gray)
+                    VStack(alignment: .leading) {
+                        Text(appIntroModel.appName)
+                            .fontWeight(.medium)
+                        Text(appIntroModel.appDescription)
+                            .font(.caption)
+                            .foregroundStyle(Color.gray)
+                        
+                    }
                     
-                }
-                
-                Spacer()
-                
-                Button {
+                    Spacer()
                     
-                } label: {
-                    Text("获取")
-                        .font(.callout)
-                        .foregroundStyle(Color.blue)
-                        .fontWeight(.medium)
-                        .padding(6)
-                        .padding(.horizontal, 12)
-                        .background {
-                            RoundedRectangle(cornerRadius: 90)
-                                .foregroundStyle(Color(uiColor: .systemGray6))
-                        }
+                    Button {
+                        
+                    } label: {
+                        Text("获取")
+                            .font(.callout)
+                            .foregroundStyle(Color.blue)
+                            .fontWeight(.medium)
+                            .padding(6)
+                            .padding(.horizontal, 12)
+                            .background {
+                                RoundedRectangle(cornerRadius: 90)
+                                    .foregroundStyle(Color(uiColor: .systemGray6))
+                            }
+                    }
                 }
+                .frame(height: 90)
+                
+                
+            Spacer()
             }
-            .frame(height: 90)
-            
-            
-        Spacer()
         }
+
+        
             
     }
     
@@ -160,47 +166,53 @@ extension AppIntro {
     
     //标准视图
     var normalView: some View {
-        HStack {
-            Image(appIntroModel.appCover)
-                .resizable()
-                .scaledToFill()
-                .frame(
-                    width: normalSize,
-                    height: normalSize
-                )
-                .mask(RoundedRectangle(cornerRadius: normalRadius, style: .continuous))
-                .overlay {
-                    RoundedRectangle(cornerRadius: normalRadius, style: .continuous)
-                        .fill(Color.clear)
-                        .stroke(Color.black.opacity(0.1), lineWidth: 1)
-                }
-            
-            VStack(alignment: .leading) {
-                Text(appIntroModel.appName)
-                    .foregroundStyle(Color.primary)
-                    .fontWeight(.medium)
-                Text(appIntroModel.appDescription)
-                    .font(.caption)
-                    .foregroundStyle(Color.gray)
-            }
-            
-            Spacer()
-            
-            Button {
-                
-            } label: {
-                Text("获取")
-                    .font(.callout)
-                    .foregroundStyle(Color.blue)
-                    .fontWeight(.medium)
-                    .padding(6)
-                    .padding(.horizontal, 12)
-                    .background {
-                        RoundedRectangle(cornerRadius: 90)
-                            .foregroundStyle(Color(uiColor: .systemGray6))
+        NavigationLink {
+            AppDetailView(appIntroModel: appIntroModel)
+        } label: {
+            HStack {
+                Image(appIntroModel.appCover)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(
+                        width: normalSize,
+                        height: normalSize
+                    )
+                    .mask(RoundedRectangle(cornerRadius: normalRadius, style: .continuous))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: normalRadius, style: .continuous)
+                            .fill(Color.clear)
+                            .stroke(Color.black.opacity(0.1), lineWidth: 1)
                     }
+                
+                VStack(alignment: .leading) {
+                    Text(appIntroModel.appName)
+                        .foregroundStyle(Color.primary)
+                        .fontWeight(.medium)
+                    Text(appIntroModel.appDescription)
+                        .font(.caption)
+                        .foregroundStyle(Color.gray)
+                }
+                
+                Spacer()
+                
+                Button {
+                    
+                } label: {
+                    Text("获取")
+                        .font(.callout)
+                        .foregroundStyle(Color.blue)
+                        .fontWeight(.medium)
+                        .padding(6)
+                        .padding(.horizontal, 12)
+                        .background {
+                            RoundedRectangle(cornerRadius: 90)
+                                .foregroundStyle(Color(uiColor: .systemGray6))
+                        }
+                }
             }
         }
+
+        
     }
     
     
