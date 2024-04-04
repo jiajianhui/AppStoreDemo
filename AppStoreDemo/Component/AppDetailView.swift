@@ -59,9 +59,6 @@ extension AppDetailView {
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width, height: height)
                 .mask(Rectangle().frame(height: height))  //将超出的页面裁剪掉
-                .background(content: {
-                    Color.black
-                })
             
                 .offset(y: scrollY > 0 ? -scrollY : 0)
                 

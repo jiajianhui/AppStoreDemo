@@ -79,7 +79,7 @@ extension CardDetailView {
             }
         }
         .offset(x: showCloseBtn ? -20.0 : 40, y: 30.0)
-//        .opacity(showCloseBtn ? 1 : 1)
+        
         //延迟出现
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
@@ -101,6 +101,7 @@ extension CardDetailView {
                 .scaledToFill()
                 .matchedGeometryEffect(id: "cover\(cardContent.id)", in: nameSpace, isSource: true)  //一定要在frame上面
                 .frame(width: UIScreen.main.bounds.width, height: height)
+                .mask(Rectangle().frame(height: height))  //将超出的页面裁剪掉
                 .overlay(alignment: .bottom) {
                     info
                 }
@@ -151,9 +152,9 @@ extension CardDetailView {
             .foregroundStyle(Color(uiColor: .systemGray))
             .padding(8)
             .padding(.horizontal, 10)
+            .padding(.top, 50)
             .lineSpacing(6)
-            .frame(width: UIScreen.main.bounds.width, alignment: .leading)
-            .offset(y: 460)
+            .frame(width: UIScreen.main.bounds.width, height: 1000 , alignment: .leading)
     }
     
     
