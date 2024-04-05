@@ -20,7 +20,7 @@ struct AvatarView: View {
                 .frame(width: 36)
         }
         .sheet(isPresented: $showSheet, content: {
-            Text("1")
+            
         })
     }
 }

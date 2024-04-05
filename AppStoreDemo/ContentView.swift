@@ -43,6 +43,9 @@ struct ContentView: View {
             }
             .zIndex(1)
             
+            //避免tabbar 图标闪烁；如果不用它，Sheet页面必须使用toolbar关闭，下拉关闭也会闪烁
+            .accentColor(.blue)
+            
             //详情页
             if showDetail {
 //                ForEach(cards) { card in
