@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+struct CardButtonStyle: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.9 : 1)
+            .animation(.spring(), value: configuration.isPressed ? 0.9 : 1)
+    }
+}
+
 struct CardView: View {
     
     var cardContent: CardContentModel
@@ -20,18 +28,14 @@ struct CardView: View {
     var nameSpace: Namespace.ID
     
     var body: some View {
-        Button {
+        Button(action: {
             withAnimation(.openCard) {
                 showDetail = true
                 selectedID = cardContent.id
             }
-            
-            
-            
-        } label: {
+        }, label: {
             VStack(alignment: .leading, spacing: 0) {
                 cover
-//                info
             }
             .frame(
                 width: UIScreen.main.bounds.width - 40,
@@ -49,7 +53,9 @@ struct CardView: View {
                     .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 10)
                     .matchedGeometryEffect(id: "bg\(cardContent.id)", in: nameSpace, isSource: true)
             }
-        }
+        })
+        .buttonStyle(CardButtonStyle())
+        
     }
 }
 

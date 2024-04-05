@@ -17,9 +17,11 @@ struct CardDetailView: View {
     private let cornerRadius: CGFloat = 40
     @State private var showCloseBtn: Bool = false
     
-    
     //命名空间
     var nameSpace: Namespace.ID
+    
+    //手势相关的变量
+    @State var dragDistance: CGFloat = 0
     
     var body: some View {
         ScrollView {
@@ -39,8 +41,16 @@ struct CardDetailView: View {
             closeBtn
             
         }
+        .scaleEffect(1 - (dragDistance / 500))  //它的位置很重要，不然会有奇怪的效果
+        .background(Material.ultraThinMaterial) //缩放的过程中，用毛玻璃盖住主界面
+        
         .ignoresSafeArea()
         .statusBar(hidden: true)
+        
+        //自定义手势
+        .gesture(drag)
+        
+        
     }
 }
 
@@ -59,10 +69,7 @@ extension CardDetailView {
     //关闭按钮
     var closeBtn: some View {
         Button {
-            withAnimation(.closeCard) {
-                showDetail = false
-                selectedID = UUID()
-            }
+            close()
             
         } label: {
             ZStack {
@@ -79,6 +86,9 @@ extension CardDetailView {
             }
         }
         .offset(x: showCloseBtn ? -20.0 : 40, y: 30.0)
+        
+        //随着拖动距离（大于120），逐渐消失
+        .opacity((120 - dragDistance) / 120)
         
         //延迟出现
         .onAppear {
@@ -171,6 +181,48 @@ extension CardDetailView {
             .fill(Color.white)
             .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 10)
             .matchedGeometryEffect(id: "bg\(cardContent.id)", in: nameSpace, isSource: true)
+    }
+    
+    //关闭函数
+    func close() {
+        withAnimation(.closeCard) {
+            showDetail = false
+            selectedID = UUID()
+        }
+    }
+    
+}
+
+//MARK: - 自定义手势
+extension CardDetailView {
+    var drag: some Gesture {
+        DragGesture(minimumDistance: 30, coordinateSpace: .local) //最低移动30的距离，手势才会被识别
+        
+            //手势拖动时的回调
+            .onChanged { value in
+                if value.startLocation.x < 120 {  //拖动手势开始时用户触摸屏幕的X坐标位置
+                    withAnimation(.closeCard) {
+                        dragDistance = abs(value.translation.width)  //当前手势距离手势开始时的距离
+                    }
+                    
+                }
+                
+                if dragDistance > 120 {
+                    close()
+                }
+            }
+        
+            //手势结束后的回调
+            .onEnded { value in
+                if dragDistance > 100 {
+                    close()
+                } else {
+                    withAnimation(.openCard) {
+                        dragDistance = 0
+                    }
+                    
+                }
+            }
     }
     
 }
